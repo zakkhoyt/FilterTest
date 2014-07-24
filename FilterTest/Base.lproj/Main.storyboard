@@ -39,16 +39,22 @@
                                         <rect key="frame" x="18" y="417" width="284" height="31"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <connections>
-                                            <action selector="updateFilterFromSlider2:" destination="BYZ-38-t0r" eventType="valueChanged" id="M8Z-jU-nCV"/>
+                                            <action selector="updateFilterFromSlider:" destination="BYZ-38-t0r" eventType="valueChanged" id="UFF-PO-8Rv"/>
                                         </connections>
                                     </slider>
                                     <slider appearanceType="aqua" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="cKM-hd-Lxe" customClass="JAMAccurateSlider">
                                         <rect key="frame" x="18" y="354" width="284" height="31"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <connections>
+                                            <action selector="updateFilterFromSlider:" destination="BYZ-38-t0r" eventType="valueChanged" id="4gW-TU-5iF"/>
+                                        </connections>
                                     </slider>
                                     <slider appearanceType="aqua" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="qDv-aC-7ib" customClass="JAMAccurateSlider">
                                         <rect key="frame" x="18" y="291" width="284" height="31"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <connections>
+                                            <action selector="updateFilterFromSlider:" destination="BYZ-38-t0r" eventType="valueChanged" id="4vF-hh-UkN"/>
+                                        </connections>
                                     </slider>
                                     <label appearanceType="aqua" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s2U-as-IxO">
                                         <rect key="frame" x="20" y="455" width="280" height="17"/>

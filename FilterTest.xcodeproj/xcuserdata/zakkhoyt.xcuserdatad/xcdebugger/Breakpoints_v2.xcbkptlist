@@ -46,12 +46,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FilterTest/ViewController.m"
-            timestampString = "427852544.865654"
+            timestampString = "427853880.775135"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1405"
-            endingLineNumber = "1405"
+            startingLineNumber = "1400"
+            endingLineNumber = "1400"
             landmarkName = "-setupFilter"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FilterTest/ViewController.m"
+            timestampString = "427853880.775135"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1738"
+            endingLineNumber = "1738"
+            landmarkName = "-updateFilterFromSlider:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

@@ -167,28 +167,26 @@ static NSString *SegueMainToImage = @"SegueMainToImage";
         case GPUIMAGE_SEPIA:
         {
             self.title = @"Sepia Tone";
-            self.slider1.hidden = NO;
-            
-            [self.slider1 setValue:1.0];
-            [self.slider1 setMinimumValue:0.0];
-            [self.slider1 setMaximumValue:1.0];
-            
+            [self setLabelsTexts:@[@"Sepia Tone"]];
+            [self setSlidersValues:@[@(0), @(1.0), @(1.0)]];
             self.filter = [[GPUImageSepiaFilter alloc] init];
         }; break;
         case GPUIMAGE_PIXELLATE:
         {
             self.title = @"Pixellate";
-            self.slider1.hidden = NO;
             
-            [self.slider1 setValue:0.05];
-            [self.slider1 setMinimumValue:0.0];
-            [self.slider1 setMaximumValue:0.3];
-            
+            [self setLabelsTexts:@[@"Fractional Width"]];
+            [self setSlidersValues:@[@(0), @(0.05), @(0.5)]];
             self.filter = [[GPUImagePixellateFilter alloc] init];
         }; break;
         case GPUIMAGE_POLARPIXELLATE:
         {
             self.title = @"Polar Pixellate";
+            [self setLabelsTexts:@[@"Center", @"Pixel Size X", @"Pixel Size Y"]];
+            [self setSlidersValues:@[@(-0.1), @(0.05), @(0.1),
+                                     @(0.0), @(0.05), @(0.5),
+                                     @(0.0), @(0.05), @(0.5)]];
+
             self.slider1.hidden = NO;
             
             [self.slider1 setValue:0.05];
@@ -200,12 +198,11 @@ static NSString *SegueMainToImage = @"SegueMainToImage";
         case GPUIMAGE_PIXELLATE_POSITION:
         {
             self.title = @"Pixellate (position)";
-            self.slider1.hidden = NO;
-            
-            [self.slider1 setValue:0.25];
-            [self.slider1 setMinimumValue:0.0];
-            [self.slider1 setMaximumValue:0.5];
-            
+            [self setLabelsTexts:@[@"Radius", @"Fractional Width of a Pixel", @"Pixel Size X", @"Pixel Size Y"]];
+            [self setSlidersValues:@[@(0), @(0.25), @(0.5),
+                                     @(0), @(0.05), @(0.5),
+                                     @(0.0), @(0.5), @(1.0),
+                                     @(0.0), @(0.5), @(1.0)]];
             self.filter = [[GPUImagePixellatePositionFilter alloc] init];
         }; break;
         case GPUIMAGE_POLKADOT:
@@ -1684,21 +1681,30 @@ static NSString *SegueMainToImage = @"SegueMainToImage";
             self.slider1.minimumValue = minNumber.floatValue;
             self.slider1.value = number.floatValue;
             self.slider1.maximumValue = maxNumber.floatValue;
-            self.slider1.hidden = NO;
+            
         } else if(index == 1){
             self.slider2.minimumValue = minNumber.floatValue;
             self.slider2.value = number.floatValue;
             self.slider2.maximumValue = maxNumber.floatValue;
-            self.slider2.hidden = NO;
+            
         } else if(index == 2){
             self.slider3.minimumValue = minNumber.floatValue;
             self.slider3.value = number.floatValue;
             self.slider3.maximumValue = maxNumber.floatValue;
-            self.slider3.hidden = NO;
+            
         } else if(index == 3){
             self.slider4.minimumValue = minNumber.floatValue;
             self.slider4.value = number.floatValue;
             self.slider4.maximumValue = maxNumber.floatValue;
+            
+        }
+        if(index / 3 == 0){
+            self.slider1.hidden = NO;
+        } else if(index / 3 == 1){
+            self.slider2.hidden = NO;
+        } else if(index / 3 == 2){
+            self.slider3.hidden = NO;
+        } else if(index / 3 == 3){
             self.slider4.hidden = NO;
         }
     }
@@ -1728,8 +1734,15 @@ static NSString *SegueMainToImage = @"SegueMainToImage";
     {
         case GPUIMAGE_SEPIA: [(GPUImageSepiaFilter *)self.filter setIntensity:[(UISlider *)sender value]]; break;
         case GPUIMAGE_PIXELLATE: [(GPUImagePixellateFilter *)self.filter setFractionalWidthOfAPixel:[(UISlider *)sender value]]; break;
-        case GPUIMAGE_POLARPIXELLATE: [(GPUImagePolarPixellateFilter *)self.filter setPixelSize:CGSizeMake([(UISlider *)sender value], [(UISlider *)sender value])]; break;
-        case GPUIMAGE_PIXELLATE_POSITION: [(GPUImagePixellatePositionFilter *)self.filter setRadius:[(UISlider *)sender value]]; break;
+        case GPUIMAGE_POLARPIXELLATE: {
+            [(GPUImagePolarPixellateFilter *)self.filter setPixelSize:CGSizeMake(self.slider1.value, self.slider1.value)];
+            [(GPUImagePolarPixellateFilter *)self.filter setCenter:CGPointMake(self.slider2.value, self.slider3.value)];
+        } break;
+        case GPUIMAGE_PIXELLATE_POSITION: {
+            [(GPUImagePixellatePositionFilter *)self.filter setRadius:self.slider1.value];
+            [(GPUImagePixellatePositionFilter *)self.filter setFractionalWidthOfAPixel:self.slider2.value];
+            [(GPUImagePixellatePositionFilter *)self.filter setCenter:CGPointMake(self.slider3.value, self.slider4.value)];
+        }  break;
         case GPUIMAGE_POLKADOT: [(GPUImagePolkaDotFilter *)self.filter setFractionalWidthOfAPixel:[(UISlider *)sender value]]; break;
         case GPUIMAGE_HALFTONE: [(GPUImageHalftoneFilter *)self.filter setFractionalWidthOfAPixel:[(UISlider *)sender value]]; break;
         case GPUIMAGE_SATURATION: [(GPUImageSaturationFilter *)self.filter setSaturation:[(UISlider *)sender value]]; break;
@@ -1831,24 +1844,6 @@ static NSString *SegueMainToImage = @"SegueMainToImage";
 
 
 
-- (IBAction)updateFilterFromSlider2:(UISlider *)sender {
-    //    switch(self.filterType){
-    //        case GPUIMAGE_TRANSFORM3D:
-    //        {
-    //            CATransform3D perspectiveTransform = CATransform3DIdentity;
-    //            perspectiveTransform.m34 = 0.4;
-    //            perspectiveTransform.m33 = 0.4;
-    //            perspectiveTransform = CATransform3DScale(perspectiveTransform, 0.75, 0.75, 0.75);
-    //            perspectiveTransform = CATransform3DRotate(perspectiveTransform, [(UISlider*)sender value], 0.0, 1.0, 0.0);
-    //
-    //
-    //
-    //            [(GPUImageTransformFilter *)self.filter setTransform3D:perspectiveTransform];
-    //        }; break;
-    //        default: break;
-    //    }
-    
-}
 
 
 #pragma mark GPUImageVideoCameraDelegate
